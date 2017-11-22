@@ -26,6 +26,7 @@ public class Sample {
 		printRensa(field);
 	}
 
+	//フィールドアクションをおこし、出力
 	public static void printRensa(String[][] field) {
 		//初期状態出力
 		printField(field);
@@ -33,7 +34,7 @@ public class Sample {
 		field = dropPy(field);
 		printField(field);
 		System.out.println("連鎖開始");
-		for (int index = 1; index <= 100; index++) {
+		for (int index = 0; index <= 100; index++) {
 			// TODO pairを引数に渡さない形にする（いちいち受け取らなくてもよい？）
 			List<int[][]> pair = new ArrayList<int[][]>();
 			pair = makePair(field, pair);
@@ -43,6 +44,7 @@ public class Sample {
 			//Boolean rem = remvGroup(groupList, field);
 			if (!rem) {
 				System.out.println("終了");
+				System.out.println(index+"連鎖");
 				break;
 			}
 			printField(field);
@@ -138,6 +140,7 @@ public class Sample {
 		return remFlag;
 	}
 
+	//下が空の時に落とす
 	public static String[][] dropPy(String[][] field) {
 		for (int i = 1; i <= yoko; i++) {
 			for (int j = 1; j <= tate; j++) {
