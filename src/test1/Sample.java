@@ -3,14 +3,16 @@ package test1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Sample {
 	// フィールド大きさ指定
 	public static int tate = 13;
 	public static int yoko = 6;
+	public static String[] c = { "red", "yellow", "blue", "green" };
 
 	public static void main(String[] args) {
-		String[] c = { "red", "yellow", "blue", "green" };
+
 		String[][] field = new String[yoko + 2][tate + 2];
 		field = makeKabe(field);
 		field[1][1] = c[0];
@@ -24,13 +26,16 @@ public class Sample {
 		field[4][2] = c[3];
 		field[4][6] = c[2];
 		printRensa(field);
+		String[][] tsumo =makeTsumo(5);
+		field[3][13]=tsumo[0][0];
+		printField(field);
 	}
 
-	//フィールドアクションをおこし、出力
+	// フィールドアクション発生、経過と連鎖数出力
 	public static void printRensa(String[][] field) {
-		//初期状態出力
+		// 初期状態出力
 		printField(field);
-		//空中にあるぷよを落下させる
+		// 空中にあるぷよを落下させる
 		field = dropPy(field);
 		printField(field);
 		System.out.println("連鎖開始");
@@ -39,12 +44,12 @@ public class Sample {
 			List<int[][]> pair = new ArrayList<int[][]>();
 			pair = makePair(field, pair);
 			List<List<int[]>> groupList = new ArrayList<List<int[]>>();
-			groupList =makeGroup(pair);
+			groupList = makeGroup(pair);
 			Boolean rem = remvGroup(groupList, field);
-			//Boolean rem = remvGroup(groupList, field);
+			// Boolean rem = remvGroup(groupList, field);
 			if (!rem) {
 				System.out.println("終了");
-				System.out.println(index+"連鎖");
+				System.out.println(index + "連鎖");
 				break;
 			}
 			printField(field);
@@ -140,14 +145,14 @@ public class Sample {
 		return remFlag;
 	}
 
-	//下が空の時に落とす
+	// 下が空の時に落とす
 	public static String[][] dropPy(String[][] field) {
 		for (int i = 1; i <= yoko; i++) {
 			for (int j = 1; j <= tate; j++) {
 				for (int k = j; k > 0; k--) {
 					if (field[i][k] == null) {
 					} else if (field[i][k - 1] == null) {
-						//dummy必要かわからん
+						// dummy必要かわからん
 						String dummy = field[i][k].toString();
 						field[i][k - 1] = dummy;
 						field[i][k] = null;
@@ -186,5 +191,27 @@ public class Sample {
 
 		}
 		return pair;
+	}
+
+	public static String[][] makeTsumo(int loopNum) {
+		String[][] tsumo  =new String[loopNum][2] ;
+		Random rand = new Random();
+		for (int i = 0; i < loopNum; i++) {
+			String t1 = c[rand.nextInt(3)];
+			String t2 = c[rand.nextInt(3)];
+			tsumo[i][0]=t1;
+			tsumo[i][1]=t2;
+			System.out.println(tsumo[i]);
+		}
+		return tsumo;
+	}
+	public static void putTsumo(String[][] field, String[] tsumo,int[][] place){
+
+	}
+	public static void randPut(String[][] field,String[] tsumo){
+
+	}
+	public static List<int[][]> makeAllPlace(){
+		return null;
 	}
 }
